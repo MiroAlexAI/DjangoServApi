@@ -1,5 +1,14 @@
+### Для запуска -
+ В папке \Dj_server_mir> 
+ ввести в Терминале
+ python manage.py runserver
+
+Или запустить файл
+RUN SERVER.bat
+
+
 # DjangoServApi
-Test project
+Test project 
 
 ### Пример работы в браузере
 ![image](https://github.com/MiroAlexAI/DjangoServApi/assets/126348122/9f4dba65-c9dc-4b84-ae7c-20ada6f194bb)
