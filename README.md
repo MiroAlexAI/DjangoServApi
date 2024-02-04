@@ -1,0 +1,2 @@
+# DjangoServApi
+Test project
