@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестовое задание для Back-end разработчиков от Mironova A</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+</head>
+<body>
+    <h3>Тестовое задание для Back-end разработчиков от Mironov A</h3>
+
+    <h2>Project by info@mvp.by </h2>
+
+    <button id="fetchUsersButton">Fetch Users</button>
+
+    <div id="usersList">
+
+    </div>
+
+    <form id="userForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
+        <br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+       
+        <button type="button" id="createUserButton">Create User</button>
+    </form>
+
+
+
+    <script>
+        $(document).ready(function() {
+
+            // Функция для отправки данных пользователя
+            function createUser(username,email, password) {
+                var api_url = 'http://127.0.0.1:8000/api/create_user/';
+
+                $.ajax({
+                    type: 'POST',
+                    url: api_url,
+                    data: JSON.stringify({ "username": username, "email": email, "password": password }),
+                    contentType: 'application/json',
+                    success: function(data) {
+                        console.log('User created successfully:', data);
+                        
+                        fetchUsers();
+                    },
+                    error: function(error) {
+                        console.error('Error creating user:', error);
+                    }
+                });
+            }
+
+
+            // Обработчик события для кнопки "Create User"
+            $('#createUserButton').click(function() {
+                var username = $('#username').val();
+                var email = $('#email').val();
+                var password = $('#password').val();
+                
+                createUser(username, email, password );
+            });
+
+
+
+            $('#fetchUsersButton').click(function() {
+               
+                var api_url = 'http://127.0.0.1:8000/api/users/'; 
+
+                $.get(api_url, function(data) {
+                 
+                    var usersList = '<h2>Users in base:</h2><ul>';
+                    for (var i = 0; i < data.length; i++) {
+                        usersList += '<li>' + data[i].username + '</li>';
+                    }
+                    usersList += '</ul>';
+                    $('#usersList').html(usersList);
+                }).fail(function() {
+                
+                    $('#usersList').html('<p>Error fetching users.</p>');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
